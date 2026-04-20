@@ -17,6 +17,9 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({ isOpen, onClose, data,
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   
+  const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
+  const [rowHeights, setRowHeights] = useState<Record<number, number>>({});
+  
   const inputRef = useRef<HTMLInputElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -108,6 +111,49 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({ isOpen, onClose, data,
   const activeCol = activeCell?.match(/[A-Z]+/)?.[0];
   const activeRow = parseInt(activeCell?.match(/\d+/)?.[0] || '0');
 
+  const getColWidth = (col: string) => columnWidths[col] || 100;
+  const getRowHeight = (row: number) => rowHeights[row] || 25;
+
+  const handleColumnResize = (e: React.MouseEvent, col: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const startX = e.clientX;
+    const startWidth = getColWidth(col);
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const newWidth = Math.max(40, startWidth + (moveEvent.clientX - startX));
+      setColumnWidths(prev => ({ ...prev, [col]: newWidth }));
+    };
+
+    const onMouseUp = () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  };
+
+  const handleRowResize = (e: React.MouseEvent, row: number) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const startY = e.clientY;
+    const startHeight = getRowHeight(row);
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const newHeight = Math.max(20, startHeight + (moveEvent.clientY - startY));
+      setRowHeights(prev => ({ ...prev, [row]: newHeight }));
+    };
+
+    const onMouseUp = () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  };
+
   return (
     <div 
       ref={windowRef}
@@ -146,49 +192,39 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({ isOpen, onClose, data,
         <span className="cursor-pointer hover:text-black">Formulas</span>
       </div>
 
-      {/* Formula Bar */}
-      <div className="flex items-center border-b border-slate-200 bg-white shadow-inner">
-        <div className="w-14 px-2 py-1.5 text-center text-xs font-mono text-slate-500 border-r border-slate-200 bg-[#f8fafc] font-bold">
-          {activeCell || ''}
-        </div>
-        <div className="px-3 py-1.5 font-serif italic text-[#217346] text-sm border-r border-slate-200 bg-[#f8fafc] select-none">
-          fx
-        </div>
-        <div className="flex-grow">
-          <input 
-            ref={inputRef}
-            type="text"
-            className="w-full px-4 py-1.5 text-[13px] focus:outline-none font-sans text-slate-800"
-            value={editingValue}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            onKeyDown={handleKeyDown}
-            placeholder="Type value or formula (e.g., =SUM(A1:B1))"
-          />
-        </div>
-      </div>
-
       {/* Grid Container */}
       <div className="flex-grow overflow-auto bg-[#e1e1e1] custom-scrollbar">
-        <table className="border-collapse bg-white w-full table-fixed">
+        <table className="border-collapse bg-white table-fixed" style={{ width: 'max-content' }}>
           <thead>
-            <tr className="h-6">
+            <tr style={{ height: '25px' }}>
               <th className="sticky top-0 left-0 z-30 w-10 bg-[#f3f2f1] border border-slate-300"></th>
               {cols.map(col => (
                 <th 
                   key={col} 
-                  className={`sticky top-0 z-20 w-24 border border-slate-300 py-0.5 text-[10px] font-bold text-center transition-colors ${activeCol === col ? 'bg-[#c6efce] text-[#006100]' : 'bg-[#f3f2f1] text-slate-500'}`}
+                  style={{ width: `${getColWidth(col)}px`, minWidth: `${getColWidth(col)}px` }}
+                  className={`sticky top-0 z-20 border border-slate-300 py-0.5 text-[10px] font-bold text-center transition-colors relative group select-none ${activeCol === col ? 'bg-[#c6efce] text-[#006100]' : 'bg-[#f3f2f1] text-slate-500'}`}
                 >
                   {col}
+                  <div 
+                    className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize hover:bg-[#217346] z-30 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onMouseDown={(e) => handleColumnResize(e, col)}
+                  />
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map(row => (
-              <tr key={row} className="h-6">
-                <td className={`sticky left-0 z-20 border border-slate-300 text-center text-[10px] font-bold transition-colors ${activeRow === row ? 'bg-[#c6efce] text-[#006100]' : 'bg-[#f3f2f1] text-slate-500'}`}>
+              <tr key={row} style={{ height: `${getRowHeight(row)}px` }}>
+                <td 
+                  style={{ width: '40px', minWidth: '40px' }}
+                  className={`sticky left-0 z-20 border border-slate-300 text-center text-[10px] font-bold transition-colors relative group select-none ${activeRow === row ? 'bg-[#c6efce] text-[#006100]' : 'bg-[#f3f2f1] text-slate-500'}`}
+                >
                   {row}
+                  <div 
+                    className="absolute bottom-0 left-0 w-full h-1.5 cursor-row-resize hover:bg-[#217346] z-30 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onMouseDown={(e) => handleRowResize(e, row)}
+                  />
                 </td>
                 {cols.map(col => {
                   const id = `${col}${row}`;
@@ -197,10 +233,22 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({ isOpen, onClose, data,
                     <td 
                       key={id} 
                       onClick={() => handleCellClick(id)}
-                      className={`border border-slate-200 px-2 text-[12px] text-slate-700 relative cursor-cell overflow-hidden whitespace-nowrap ${isActive ? 'ring-2 ring-inset ring-[#217346] z-10 bg-white' : 'hover:bg-slate-50'}`}
+                      style={{ width: `${getColWidth(col)}px`, minWidth: `${getColWidth(col)}px` }}
+                      className={`border border-slate-200 text-[12px] text-slate-700 relative cursor-cell overflow-hidden whitespace-nowrap ${
+                        isActive ? 'ring-2 ring-inset ring-[#217346] z-10 bg-white px-0' : 'hover:bg-slate-50 px-2'
+                      }`}
                     >
                       {isActive ? (
-                        <div className="w-full h-full flex items-center font-medium">{editingValue}</div>
+                        <input
+                          ref={inputRef}
+                          type="text"
+                          className="w-full h-full bg-white outline-none font-medium px-2"
+                          value={editingValue}
+                          onChange={handleInputChange}
+                          onBlur={handleInputBlur}
+                          onKeyDown={handleKeyDown}
+                          autoFocus
+                        />
                       ) : (
                         renderCellValue(id)
                       )}

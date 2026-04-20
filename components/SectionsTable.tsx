@@ -6,7 +6,7 @@ export const SectionsTable: React.FC = () => {
   return (
     <div className="w-full border border-[#e2e8f0] rounded-xl overflow-hidden bg-white shadow-sm">
       <table className="w-full text-left border-collapse">
-        <thead className="bg-[#f8fafc] border-b border-[#e2e8f0]">
+        <thead className="bg-white border-b border-[#e2e8f0]">
           <tr>
             <th className="px-8 py-4 text-sm font-semibold text-[#1e293b] w-1/4">Sections</th>
             <th className="px-8 py-4 text-sm font-semibold text-[#1e293b] w-1/4">

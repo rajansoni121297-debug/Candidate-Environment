@@ -2,6 +2,7 @@ import React from 'react';
 
 export type AssessmentSection = 'MCQ' | 'SIM' | 'SUBJECTIVE' | 'VIDEO';
 export type FlowStep = 'LANDING' | 'PROCTORING' | 'ASSESSMENT' | 'RESULTS';
+export type SimulationDesign = 'Design1' | 'Design2';
 
 export interface InstructionItem {
   id: number;

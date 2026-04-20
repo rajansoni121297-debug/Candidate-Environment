@@ -7,6 +7,7 @@ interface LandingScreenProps {
   completedSections: Set<AssessmentSection>;
   onStart: () => void;
   timeLeft: number;
+  isTimerStarted: boolean;
   subStep: number;
   onNextSubStep: () => void;
   onPrevSubStep: () => void;
@@ -17,10 +18,17 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
   completedSections, 
   onStart,
   timeLeft,
+  isTimerStarted,
   subStep,
   onNextSubStep,
   onPrevSubStep
 }) => {
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
   const sections = [
     { id: 'MCQ' as AssessmentSection, label: 'MCQ', icon: <FileText size={18} /> },
     { id: 'SIM' as AssessmentSection, label: 'SIM', icon: <Layout size={18} /> },
@@ -54,20 +62,20 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
   ];
 
   return (
-    <div className="flex flex-col h-full bg-[#f8fafc]">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
       <div className="bg-white px-10 py-6 flex items-center justify-between border-b border-gray-100">
-        <div className="flex items-center space-x-4">
-          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-            <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-sm rotate-45 transform origin-center" />
-          </div>
-          <h1 className="text-2xl font-bold text-[#1e293b]">Tax Concepts</h1>
-        </div>
+        <img src="/assets/logo.png" alt="MYCPE ONE Assessments" className="h-10 object-contain" />
         <div className="flex items-center space-x-6">
           <button className="text-[#3A58EF] font-bold text-sm hover:underline">Evaluation Criteria</button>
           <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-full border border-gray-100">
             <Clock size={16} className="text-gray-400" />
-            <span className="text-sm font-medium text-gray-600">Assessment Duration : <span className="font-bold text-[#1e293b]">40 min</span></span>
+            <span className="text-sm font-medium text-gray-600">
+              {isTimerStarted ? 'Time Remaining : ' : 'Assessment Duration : '}
+              <span className="font-bold text-[#1e293b]">
+                {isTimerStarted ? formatTime(timeLeft) : '40 min'}
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -127,7 +135,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
         {/* Main Content Card */}
         <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="bg-gray-50 px-10 py-5 border-b border-gray-100">
-            <h2 className="text-xl font-bold text-[#1e293b]">
+            <h2 className="text-lg font-bold text-[#1e293b]">
               {subStep === 0 ? 'Assessment Instructions' : 'Navigating the Exam'}
             </h2>
           </div>
@@ -140,7 +148,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
                     <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
                       {point.icon}
                     </div>
-                    <span className="text-[#334155] font-medium">{point.text}</span>
+                    <span className="text-sm text-[#334155] font-medium">{point.text}</span>
                   </div>
                 ))}
               </div>
@@ -152,8 +160,8 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
                       {point.id}
                     </div>
                     <div className="space-y-1">
-                      <h4 className="font-bold text-[#1e293b]">{point.title}</h4>
-                      <p className="text-sm text-[#64748b] leading-relaxed">{point.text}</p>
+                      <h4 className="text-sm font-bold text-[#1e293b]">{point.title}</h4>
+                      <p className="text-xs text-[#64748b] leading-relaxed">{point.text}</p>
                     </div>
                   </div>
                 ))}

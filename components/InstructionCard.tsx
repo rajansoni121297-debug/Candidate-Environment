@@ -55,7 +55,7 @@ export const InstructionCard: React.FC = () => {
 
   return (
     <div className="bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-sm">
-      <div className="bg-[#f8fafc] px-6 py-4 border-b border-[#e2e8f0]">
+      <div className="bg-white px-6 py-4 border-b border-[#e2e8f0]">
         <h2 className="text-lg font-bold text-[#1e293b]">Assessment Instructions</h2>
       </div>
       <div className="p-8 space-y-6">
