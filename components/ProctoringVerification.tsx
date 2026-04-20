@@ -32,7 +32,7 @@ export const ProctoringVerification: React.FC<ProctoringVerificationProps> = ({ 
   };
 
   return (
-    <div className="flex-grow flex flex-col items-center justify-center bg-gray-50 p-8">
+    <div className="flex-grow flex flex-col items-center justify-center bg-white p-8 overflow-y-auto custom-scrollbar">
       <div className="max-w-2xl w-full bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
         <div className="bg-[#3A58EF] p-8 text-white text-center space-y-2">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">

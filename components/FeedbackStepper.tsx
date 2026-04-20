@@ -87,7 +87,7 @@ export const FeedbackStepper: React.FC<FeedbackStepperProps> = ({ mode, onStart,
       
       <div className="relative bg-white w-full max-w-2xl min-h-[500px] rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
         {/* Header */}
-        <div className="px-8 py-5 border-b border-gray-100 flex items-center justify-between bg-[#f8fafc]">
+        <div className="px-8 py-5 border-b border-gray-100 flex items-center justify-between bg-white">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-xs font-bold">
               {step < 7 ? step + 1 : '✓'}
@@ -189,7 +189,7 @@ export const FeedbackStepper: React.FC<FeedbackStepperProps> = ({ mode, onStart,
         </div>
 
         {/* Footer Navigation */}
-        <div className="px-8 py-6 bg-[#f8fafc] border-t border-gray-100 flex items-center justify-between">
+        <div className="px-8 py-6 bg-white border-t border-gray-100 flex items-center justify-between">
           {step < 6 ? (
             <>
               <button 

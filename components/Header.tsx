@@ -30,19 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
     return (
       <div className="flex flex-col px-8 py-4 border-b border-gray-100 bg-white relative">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <div className="flex flex-col">
-              <div className="flex items-center">
-                <div className="w-6 h-6 bg-[#3A58EF] flex items-center justify-center mr-2">
-                  <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
-                </div>
-                <span className="text-xl font-black text-[#1e293b] tracking-tight">MYCPE <span className="text-[#3A58EF]">ONE</span></span>
-              </div>
-              <div className="text-[8px] font-bold tracking-[0.3em] text-[#64748b] border-t border-gray-200 pt-0.5 mt-0.5 uppercase">
-                Assessments
-              </div>
-            </div>
-          </div>
+          <img src="/assets/logo.png" alt="MYCPE ONE Assessments" className="h-10 object-contain" />
 
           <div className="flex items-center space-x-3">
             {!hideTools && (
@@ -70,19 +58,14 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
         
-        <h1 className="text-2xl font-bold text-[#1e293b]">{title || 'Book-keeping Basics'}</h1>
+        <h1 className="text-xl font-bold text-[#1e293b]">{title || 'Book-keeping Basics'}</h1>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between px-8 py-6 border-b border-gray-100 bg-white">
-      <div className="flex items-center space-x-4">
-        <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-          <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-sm rotate-45 transform origin-center" />
-        </div>
-        <h1 className="text-2xl font-bold text-[#1e293b]">Tax Concepts</h1>
-      </div>
+      <img src="/assets/logo.png" alt="MYCPE ONE Assessments" className="h-10 object-contain" />
 
       <div className="flex items-center space-x-8 mt-4 md:mt-0">
         <button className="text-[#4f46e5] font-semibold text-sm hover:underline">

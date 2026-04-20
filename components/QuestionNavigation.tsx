@@ -96,16 +96,28 @@ const QuestionBadge: React.FC<{
   const getBadgeStyle = () => {
     const isAnswered = status === 'answered';
 
+    if (reviewMode === 'skipped') {
+      if (isCurrent && isSkipped) {
+        return "bg-[#1e293b]/20 text-[#1e293b] border-2 border-dashed border-[#1e293b]";
+      }
+      if (isCurrent) {
+        return "bg-[#1e293b] text-white shadow-md z-10";
+      }
+      if (isSkipped) {
+        return "bg-white text-[#1e293b] border-2 border-dashed border-[#1e293b]";
+      }
+      if (isAnswered) {
+        return "bg-[#3A58EF] text-white";
+      }
+      return "bg-[#eef2f6] text-[#1e293b] hover:bg-gray-200";
+    }
+
     if (isCurrent) {
       return "bg-[#1e293b] text-white shadow-md z-10";
     }
 
     if (isAnswered) {
       return "bg-[#3A58EF] text-white";
-    }
-
-    if (isSkipped) {
-      return "bg-white text-[#1e293b] border-2 border-dotted border-[#3A58EF]";
     }
 
     return "bg-[#eef2f6] text-[#1e293b] hover:bg-gray-200";

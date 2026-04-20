@@ -4,23 +4,16 @@ import { CheckCircle2, Download } from 'lucide-react';
 
 export const ResultsView: React.FC = () => {
   return (
-    <div className="bg-[#f8fafc] min-h-full py-12 px-4 md:px-0">
+    <div className="bg-white min-h-full py-12 px-4 md:px-0">
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {/* Header Section */}
         <div className="px-10 py-8 border-b border-gray-50">
           <div className="flex flex-col mb-6">
             <div className="flex items-center">
-              <svg viewBox="0 0 100 40" className="w-20 h-7 fill-[#4338ca]">
-                <path d="M10 5L25 20L10 35V5Z" fill="#3b82f6"/>
-                <path d="M15 10L25 20L15 30V10Z" fill="#6366f1"/>
-              </svg>
-              <div className="flex flex-col -ml-3">
-                <span className="text-lg font-bold tracking-tight text-[#1e293b]">MYCPE <span className="text-[#3b82f6]">ONE</span></span>
-                <span className="text-[8px] font-bold tracking-[0.2em] text-[#64748b] -mt-1 uppercase text-center border-t border-gray-300">Assessments</span>
-              </div>
+              <img src="/assets/logo.png" alt="MYCPE ONE Assessments" className="h-10 object-contain" />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-[#1e293b]">Book-keeping Basics</h2>
+          <h2 className="text-xl font-bold text-[#1e293b]">Book-keeping Basics</h2>
         </div>
 
         {/* Content Section */}
@@ -32,12 +25,12 @@ export const ResultsView: React.FC = () => {
              </div>
           </div>
 
-          <h1 className="text-3xl font-bold text-[#1e293b] mb-3 text-center">Thank You for Completing the Assessment!</h1>
-          <p className="text-[#64748b] text-base mb-10">Your results have been successfully submitted.</p>
+          <h1 className="text-2xl font-bold text-[#1e293b] mb-3 text-center">Thank You for Completing the Assessment!</h1>
+          <p className="text-[#64748b] text-sm mb-10">Your results have been successfully submitted.</p>
 
           {/* Overall Score Banner */}
           <div className="w-full bg-[#f0fdf4] border border-[#dcfce7] rounded-xl py-6 px-8 text-center mb-12">
-            <p className="text-[#15803d] font-bold text-lg">
+            <p className="text-[#15803d] font-bold text-base">
               Overall Score: Congratulations! You have successfully passed the assessment.
             </p>
           </div>
@@ -46,15 +39,15 @@ export const ResultsView: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-12">
             <div className="bg-white border border-gray-100 rounded-xl p-8 flex flex-col items-center justify-center shadow-sm">
               <span className="text-[11px] font-bold text-[#94a3b8] uppercase tracking-widest mb-4">CORRECT</span>
-              <span className="text-5xl font-black text-[#22c55e]">20</span>
+              <span className="text-4xl font-black text-[#22c55e]">20</span>
             </div>
             <div className="bg-white border border-gray-100 rounded-xl p-8 flex flex-col items-center justify-center shadow-sm">
               <span className="text-[11px] font-bold text-[#94a3b8] uppercase tracking-widest mb-4">INCORRECT</span>
-              <span className="text-5xl font-black text-[#ef4444]">6</span>
+              <span className="text-4xl font-black text-[#ef4444]">6</span>
             </div>
             <div className="bg-white border border-gray-100 rounded-xl p-8 flex flex-col items-center justify-center shadow-sm">
               <span className="text-[11px] font-bold text-[#94a3b8] uppercase tracking-widest mb-4">NOT ATTEMPTED</span>
-              <span className="text-5xl font-black text-[#64748b]">9</span>
+              <span className="text-4xl font-black text-[#64748b]">9</span>
             </div>
           </div>
 
@@ -63,7 +56,7 @@ export const ResultsView: React.FC = () => {
             <h3 className="text-lg font-bold text-[#1e293b]">Test Summary:</h3>
             <div className="border border-gray-100 rounded-xl overflow-hidden shadow-sm">
               <table className="w-full text-left border-collapse">
-                <thead className="bg-[#f8fafc]">
+                <thead className="bg-white">
                   <tr>
                     <th className="px-8 py-5 text-xs font-bold text-[#1e293b]">Sections</th>
                     <th className="px-8 py-5 text-xs font-bold text-[#1e293b] text-center">No. Of Questions</th>
